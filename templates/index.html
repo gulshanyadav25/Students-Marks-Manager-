@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Marks Manager</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <!-- Background -->
+
+    <div class="background"></div>
+
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="brand">
+
+            <div class="brand-icon">📚</div>
+
+            <div>
+                <h2>Student Marks</h2>
+                <span>Manager</span>
+            </div>
+
+        </div>
+
+        <button id="themeBtn" class="theme-btn">
+            🌙
+        </button>
+
+    </nav>
+
+
+    <!-- MAIN -->
+
+    <main>
+
+
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <div>
+
+                <span class="eyebrow">
+                    STUDENT MANAGEMENT
+                </span>
+
+                <h1>
+                    Manage marks.
+                    <span>Simply.</span>
+                </h1>
+
+                <p>
+                    Add students, calculate results and keep
+                    your marks organized in one simple dashboard.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- STATS -->
+
+        <section class="stats">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">👨‍🎓</div>
+
+                <div>
+                    <span>Total Students</span>
+                    <h2 id="totalStudents">0</h2>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">📈</div>
+
+                <div>
+                    <span>Class Average</span>
+                    <h2 id="averageMarks">0%</h2>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">🏆</div>
+
+                <div>
+                    <span>Top Student</span>
+                    <h2 id="topStudent">---</h2>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CONTENT -->
+
+        <section class="dashboard">
+
+
+            <!-- ADD STUDENT -->
+
+            <div class="panel form-panel">
+
+                <div class="panel-heading">
+
+                    <div>
+                        <span class="label">NEW RECORD</span>
+                        <h2>Add Student</h2>
+                    </div>
+
+                    <div class="plus">+</div>
+
+                </div>
+
+
+                <form id="studentForm">
+
+                    <div class="input-group">
+
+                        <label>Student Name</label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="e.g. Rahul Sharma"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label>Roll Number</label>
+
+                        <input
+                            type="text"
+                            id="roll"
+                            placeholder="e.g. 101"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="marks-title">
+                        Enter Marks <span>(out of 100)</span>
+                    </div>
+
+
+                    <div class="marks-grid">
+
+                        <div class="input-group">
+                            <label>Maths</label>
+                            <input type="number" id="maths" min="0" max="100" value="0">
+                        </div>
+
+                        <div class="input-group">
+                            <label>Python</label>
+                            <input type="number" id="python" min="0" max="100" value="0">
+                        </div>
+
+                        <div class="input-group">
+                            <label>English</label>
+                            <input type="number" id="english" min="0" max="100" value="0">
+                        </div>
+
+                        <div class="input-group">
+                            <label>Science</label>
+                            <input type="number" id="science" min="0" max="100" value="0">
+                        </div>
+
+                        <div class="input-group">
+                            <label>Computer</label>
+                            <input type="number" id="computer" min="0" max="100" value="0">
+                        </div>
+
+                    </div>
+
+
+                    <button type="submit" class="add-btn">
+
+                        <span>+ Add Student</span>
+
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <!-- STUDENT LIST -->
+
+            <div class="panel students-panel">
+
+                <div class="panel-heading">
+
+                    <div>
+
+                        <span class="label">RECORDS</span>
+
+                        <h2>Students</h2>
+
+                    </div>
+
+                    <div class="student-count" id="studentCount">
+                        0
+                    </div>
+
+                </div>
+
+
+                <!-- SEARCH -->
+
+                <div class="search-box">
+
+                    <span>⌕</span>
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search student..."
+                    >
+
+                </div>
+
+
+                <!-- TABLE -->
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Student</th>
+
+                                <th>Roll</th>
+
+                                <th>Total</th>
+
+                                <th>Percentage</th>
+
+                                <th>Grade</th>
+
+                                <th>Action</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="studentTable">
+
+                        </tbody>
+
+                    </table>
+
+
+                    <div id="emptyState" class="empty">
+
+                        <div>📚</div>
+
+                        <h3>No students yet</h3>
+
+                        <p>
+                            Add your first student using the form.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- TOAST -->
+
+    <div id="toast" class="toast">
+        Student added successfully!
+    </div>
+
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>
